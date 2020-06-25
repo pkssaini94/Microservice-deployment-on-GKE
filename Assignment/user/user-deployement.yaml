@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: pkssaini/user-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: db_url
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_URL
+                  name: config-map
+
+            - name: db_username
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: mysql-secret
+
+            - name: db_password
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: mysql-secret
+
+            - name: JAGER_HOST_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: JAGER_HOST_URL
+                  name: config-map

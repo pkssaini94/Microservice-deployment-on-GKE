@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+  labels:
+    app: order
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: pkssaini/order-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+     
+            - name: JAGER_HOST_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: JAGER_HOST_URL
+                  name: config-map

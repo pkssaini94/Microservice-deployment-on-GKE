@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aggregator
+  labels:
+    app: aggregator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aggregator
+  template:
+    metadata:
+      labels:
+        app: aggregator
+    spec:
+      containers:
+        - name: aggregator
+          image: pkssaini/aggregator-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ORDER_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: ORDER_SERVICE_URL
+                  name: config-map
+
+            - name: USER_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: USER_SERVICE_URL
+                  name: config-map
+
+            - name: JAGER_HOST_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: JAGER_HOST_URL
+                  name: config-map
