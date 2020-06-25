@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: order-service
+
+opentracing:
+  jaeger:
+    udp-sender:
+      host: ${JAGER_HOST_URL:localhost}
+      port: 6831
+      

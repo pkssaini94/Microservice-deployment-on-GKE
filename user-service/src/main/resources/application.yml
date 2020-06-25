@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: user-service
+    
+  datasource:
+    url: ${db_url:jdbc:mysql://localhost:3307/users}
+    username: ${db_username:root}
+    password: ${db_password:root}
+    driver-class-name: com.mysql.jdbc.Driver
+    
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties: 
+      hibernate: 
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      
+opentracing:
+  jaeger:
+    udp-sender:
+      host: ${JAGER_HOST_URL:localhost}
+      port: 6831

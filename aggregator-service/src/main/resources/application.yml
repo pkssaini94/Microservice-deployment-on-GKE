@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: aggregator-service
+
+
+opentracing:
+  jaeger:
+    udp-sender:
+      host: ${JAGER_HOST_URL:localhost}
+      port: 6831
+
+order:
+  service: ${ORDER_SERVICE_URL:http://localhost:8082}
+
+user:
+  service: ${USER_SERVICE_URL:http://localhost:8083}
+  
